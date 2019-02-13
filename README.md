@@ -1,6 +1,6 @@
-# asura-fontend
+# asura-frontend
 
-> asura-fontend
+> asura-frontend
 
 ## Build Setup
 
