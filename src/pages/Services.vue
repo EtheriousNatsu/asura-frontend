@@ -74,20 +74,20 @@
             <b-card 
               no-body
               class="mb-3"
-              v-for="(tests, endpoint, index) in tests"
+              v-for="(entrie, index) in showedTests"
               :key="index">
               <b-card-header>
                 <b-row>
                   <b-col 
                     md="9"
                     class="text-truncate">
-                    {{ endpoint }}
+                    {{ entrie[0] }}
                   </b-col>
                   <b-col 
                     md="3"
                     class="text-md-right">
                     <span :id="'leftoverviewtip' + index">
-                      <b-link @click="runTestsByDashboard(endpoint)">
+                      <b-link @click="runTestsByDashboard(entrie[0])">
                         <i 
                           class="oi oi-media-play mr-1" 
                           style="font-size: 12px" />
@@ -97,7 +97,7 @@
                       </b-tooltip>
                     </span>
                     <span :id="'rightoverviewtip' + index">
-                      <b-link @click="createTestForThisEndpoint(endpoint)">
+                      <b-link @click="createTestForThisEndpoint(entrie[0])">
                         <i 
                           class="oi oi-plus mr-1" 
                           style="font-size: 12px" />
@@ -113,7 +113,7 @@
                 <b-list-group-item 
                   :to="{name: 'test', params:{serviceId: $route.params.serviceId, testId: test.id}}" 
                   :class="[isFailedTest(test.id) ? 'list-group-item-danger' : '', 'text-primary', 'text-truncate', 'd-flex', 'justify-content-between', 'align-items-center']"
-                  v-for="(test, index) in tests"
+                  v-for="(test, index) in entrie[1]"
                   :key="index">
                   {{ test.name }}
                   <b-badge 
@@ -124,6 +124,11 @@
                 </b-list-group-item>              
               </b-list-group>
             </b-card>
+            <b-pagination 
+              v-if="isPagination"
+              :total-rows="Object.entries(tests).length" 
+              v-model="currentPage" 
+              :per-page="perPage" />
           </div>
           <div v-else>
             <b-card style="background-color: rgb(247, 247, 249); padding: 0.75rem;">
@@ -189,6 +194,8 @@ export default {
   },
   data() {
     return {
+      currentPage: 1,
+      perPage: 5,
       lastest12HoursArray: [],
       startDateTimestamp: 0,
       endDateTimestamp: 0,
@@ -247,6 +254,17 @@ export default {
   },
 
   computed: {
+    isPagination() {
+      return Object.entries(this.tests).length > this.perPage;
+    },
+    showedTests() {
+      if (this.isPagination) {
+        let end = this.currentPage * this.perPage;
+        let start = end - this.perPage;
+        return Object.entries(this.tests).slice(start, end);
+      }
+      return Object.entries(this.tests);
+    },
     barChartData() {
       return {
         labels: this.lastest12HoursArray,

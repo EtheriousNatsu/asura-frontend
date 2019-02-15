@@ -1,9 +1,10 @@
 <template>
+  <div>
     <b-list-group>
         <b-list-group-item
             :class="{active: $route.name === 'results' && index === 0 && !$route.params.runId}"
             :to="{name: 'results', params: {runId: run.name}}"
-            v-for="(run, index) in runs"
+            v-for="(run, index) in showedRuns"
             :key="run.id">
             <b-row>
                 <b-col md="10">
@@ -44,6 +45,13 @@
             </b-row>
         </b-list-group-item>
     </b-list-group>
+    <br>
+    <b-pagination 
+      v-if="isPagination"
+      :total-rows="runs.length" 
+      v-model="currentPage" 
+      :per-page="perPage" />
+  </div>
 </template>
 
 
@@ -56,6 +64,26 @@ export default {
     md: {
       type: Number,
       default: 6
+    }
+  },
+  data() {
+    return {
+      currentPage: 1,
+      perPage: 10
+    };
+  },
+  computed: {
+    isPagination() {
+      return this.runs.length > this.perPage;
+    },
+    showedRuns() {
+      if (this.isPagination) {
+        let end = this.currentPage * this.perPage;
+        let start = end - this.perPage;
+        return this.runs.slice(start, end);
+      }
+
+      return this.runs;
     }
   },
   methods: {
