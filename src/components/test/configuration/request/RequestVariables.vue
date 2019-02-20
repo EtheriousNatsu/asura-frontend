@@ -261,7 +261,9 @@ export default {
         return this.$store.state.steps.setups.map(setupStep => {
           return this.$store.getters
             .getSetups(this.$route.params.serviceId)
-            .find(setup => setup.id === setupStep.id);
+            .find(setup => {
+              return setup.id === setupStep.id && setup.variables.length;
+            });
         });
       }
 
