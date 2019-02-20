@@ -145,7 +145,7 @@
             <div 
                 v-for="(setup, index) in setups"
                 :key="index">
-                <b-container>
+                <b-container v-if="setup.variables.length">
                     <p style="margin-left: 5px;">
                         <small class="text-muted">
                             Variables from
@@ -262,7 +262,7 @@ export default {
           return this.$store.getters
             .getSetups(this.$route.params.serviceId)
             .find(setup => {
-              return setup.id === setupStep.id && setup.variables.length;
+              return setup.id === setupStep.id;
             });
         });
       }
