@@ -52,11 +52,11 @@ export default {
           JSON.parse(this.stepResult.requestBody);
           return "application/json";
         } catch (error) {
-          return "text/text/plain";
+          return "text/plain";
         }
       }
 
-      return "text/text/plain";
+      return "text/plain";
     }
   }
 };
