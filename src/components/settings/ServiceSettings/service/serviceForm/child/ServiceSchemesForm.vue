@@ -28,12 +28,21 @@ export default {
       options: [
         { text: "HTTP", value: "HTTP" },
         { text: "HTTPS", value: "HTTPS" }
-      ]
+      ],
+      selectedScheme: null
     };
   },
   computed: {
-    localValue() {
-      return this.service.schemes.toUpperCase();
+    localValue: {
+      get() {
+        if (this.selectedScheme) {
+          return this.selectedScheme;
+        }
+        return this.service.schemes.toUpperCase();
+      },
+      set(scheme) {
+        this.selectedScheme = scheme;
+      }
     }
   },
   methods: {
