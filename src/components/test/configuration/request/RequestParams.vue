@@ -58,7 +58,7 @@
                             :checked="item.enabled"/>
                         <span>
                             <samp style="display: inline-block;">
-                                {{ item.key }}=<var>{{ item.value }}</var>
+                                {{ item.key }}=<var>{{ item.value | truncate}}</var>
                             </samp>
                         </span>
                         <small class="float-right">

@@ -57,7 +57,7 @@
                             v-model="item.enabled">
                             <span>
                                 <samp style="display: inline-block;">
-                                    {{ item.key }}:<var>{{ item.value }}</var>
+                                    {{ item.key | truncate }}:<var>{{ item.value | truncate}}</var>
                                 </samp>
                             </span>
                         </b-form-checkbox>

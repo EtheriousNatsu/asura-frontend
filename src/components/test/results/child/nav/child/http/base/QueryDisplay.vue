@@ -39,7 +39,7 @@ export default {
         let v1 = [];
         let v2 = this.result.requestQuery.split("&");
         v2.forEach(element => {
-          let v3 = element.split("=");
+          let v3 = decodeURI(element).split("=");
           let o = { key: v3[0], value: v3[1] };
           v1.push(o);
         });

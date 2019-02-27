@@ -58,8 +58,16 @@ Vue.component('v-select', vSelect);
 Vue.use(VueClipboard);
 
 
+// filter
+Vue.filter('truncate', (value) => {
+  if (value.length > 15) {
+    return value.substring(0, 15) + "...";
+  }
+  return value;
+})
+
 /* eslint-disable no-new */
 new Vue({
   router,
-  store
+  store,
 }).$mount("#app");

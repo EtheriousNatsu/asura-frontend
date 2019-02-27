@@ -43,13 +43,13 @@
                     <div v-else>
                         <span>
                             <code>
-                                <span>${</span>{{item.key}}<span>}</span>
+                                <span>${</span>{{item.key | truncate}}<span>}</span>
                             </code>
                         </span>
                         <i 
                             class="oi oi-arrow-right edit-icon"
                             style="cursor:none;" />    
-                        <code>{{ item.value}}</code> 
+                        <code>{{ item.value | truncate}}</code> 
                         <small class="float-right">
                             <i 
                                 class="oi oi-pencil edit-icon"
@@ -209,7 +209,7 @@
                             <i 
                                 class="oi oi-arrow-right"
                                 style="margin-right: 5px; font-size: 12px;"/>
-                            <code> {{variable.value}} </code>
+                            <code> {{variable.value | truncate}} </code>
                         </span>
                         <b-tooltip
                             v-if="variable.overwrite"

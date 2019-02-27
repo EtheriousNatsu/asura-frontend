@@ -29,6 +29,7 @@
               </div>
               <b-table 
                 v-else
+                responsive
                 :small="true"
                 :fields="fields"
                 :items="requestData">
@@ -37,6 +38,12 @@
                     @input="selectRequestData"
                     v-model="data.item.enabled">
                   </b-form-checkbox>
+                </template>
+                <template slot="key" slot-scope="data">
+                  {{data.item.key | truncate}}
+                </template>
+                <template slot="value" slot-scope="data">
+                  {{data.item.value | truncate}}
                 </template>
               </b-table>
             </div>
