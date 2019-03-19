@@ -27,6 +27,7 @@
                         v-b-tooltip.hover title="Edit environment"
                         style="margin-right: 5px; font-size: 12px; cursor: pointer;"/>
                     <i 
+                      v-show="environment.name != 'production'"
                         @click="deleteEnvironment"
                         class="oi oi-trash"
                         v-b-tooltip.hover title="Delete environment"

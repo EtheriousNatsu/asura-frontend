@@ -184,11 +184,11 @@ export default {
           text: "Results",
           class: "oi oi-task"
         },
-        // {
-        //   to: { name: "monitoring", params: params },
-        //   text: "Monitoring",
-        //   class: "oi-pulse"
-        // },
+        {
+          to: { name: "monitoring", params: params },
+          text: "Monitoring",
+          class: "oi-pulse"
+        },
         // {
         //   to: "#",
         //   text: "Deployments",

@@ -1,7 +1,27 @@
 <template>
     <b-row style="background-color: rgb(255, 255, 255); padding-top: 20px;">
         <b-col md="12">
-            <b-card style="background-color: rgb(247, 247, 249); padding: 0.75rem;">
+            <b-card 
+              no-body 
+              header="Schedules"
+              v-if="schedules.length">
+              <b-list-group flush>
+                <schedule-display 
+                  v-for="schedule in schedules" 
+                  :key="schedule.id"
+                  :schedule="schedule"/>
+                <b-card-body>
+                  <b-button 
+                    @click="createModal"
+                    variant="primary">
+                    Add another schedule
+                  </b-button>
+                </b-card-body>
+              </b-list-group>
+            </b-card>
+            <b-card 
+              v-else
+              style="background-color: rgb(247, 247, 249); padding: 0.75rem;">
                 <p class="text-center">
                     <i 
                         style="font-size: 1.5rem; color: rgb(129, 138, 145);"
@@ -10,79 +30,59 @@
                 <p class="text-center">Create a schedule to monitor your web service.</p>
                 <p class="text-center">
                     <b-button 
-                        v-b-modal.myMonitorModal
-                        variant="primary"
-                        href="#">
+                        @click="createModal"
+                        variant="primary">
                         Set up a schedule
                     </b-button>
-                    <b-modal 
-                        ref="myMonitorModal"
-                        hide-footer
-                        size="lg"
-                        id="myMonitorModal">
-                        <template slot="modal-header">
-                            <b-container>
-                                <div style="padding-top: 15px; padding-bottom: 15px;">
-                                    <span>
-                                        <button 
-                                            @click="hideModal"
-                                            class="close"
-                                            style="padding-left: 5px;">
-                                            <small>×</small>
-                                        </button>
-                                        <h5 class="text-left">
-                                            <i 
-                                                class="oi oi-pulse"
-                                                style="margin-right: 0px; font-size: inherit; padding-right: 10px;"/>
-                                            Create a new schedule
-                                        </h5>
-                                        <hr>
-                                    </span>
-                                </div>
-                                <b-row>
-                                    <b-col md="12">
-                                        <b-form-group 
-                                            class="text-left"
-                                            label="Start Date">
-
-                                        </b-form-group>
-
-                                    </b-col>
-                                </b-row>
-                            </b-container>
-                        </template>
-                    </b-modal>
                 </p>
             </b-card>
+            <monitor-Modal 
+              v-if="isShowModal"
+              ref="myMonitorModal"
+              v-on:destroy-modal="destroyModal"/>
         </b-col>
     </b-row>
 </template>
 
 
 <script>
+import MonitorModal from "@/components/monitor/MonitorModal";
+import ScheduleDisplay from "@/components/monitor/ScheduleDisplay";
+
 export default {
   name: "Monitoring",
+  components: {
+    MonitorModal,
+    ScheduleDisplay
+  },
+  data() {
+    return {
+      isShowModal: false
+    };
+  },
+  computed: {
+    schedules() {
+      return this.$store.state.schedules.filter(
+        schedule => schedule.service == this.$route.params.serviceId
+      );
+    }
+  },
   methods: {
-    hideModal() {
-      this.$refs.myMonitorModal.hide();
+    createModal() {
+      this.isShowModal = true;
+      this.$nextTick(() => {
+        this.$refs.myMonitorModal.showModal();
+      });
+    },
+    destroyModal() {
+      this.isShowModal = false;
+      this.$refs.myMonitorModal.hideModal();
     }
   }
 };
 </script>
 
 
-<style>
-#myMonitorModal___BV_modal_header_ {
-  border-bottom: 0;
-}
-.close {
-  float: right;
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1;
-  color: #000;
-  text-shadow: 0 1px 0 #fff;
-  opacity: 0.2;
-}
+<style scope>
 </style>
 

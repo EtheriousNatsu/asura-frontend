@@ -36,7 +36,13 @@ import {
   RECORD_RESULTS,
   CREATE_SUITE,
   RECORD_SUITES,
-  RECORD_NEW_SERVICE
+  RECORD_NEW_SERVICE,
+  RECORD_SCHEDULES,
+  CREATE_SCHEDULE,
+  DELETE_SCHEDULE,
+  UPDATE_SCHEDULE,
+  ADD_TEST_TO_SCHEDULE,
+  DELETE_TEST_FROM_SCHEDULE
 } from './mutation-types'
 
 import {
@@ -77,6 +83,13 @@ export default {
         oldService[key] = newService[key];
       });
     }
+
+    // 更新 production environment
+    state.environments.forEach(env => {
+      if (env.name == 'production') {
+        env.url = newService.host;
+      }
+    })
   },
 
   [RECORD_ENVIRONMENTS](state, environments) {
@@ -96,6 +109,13 @@ export default {
       return env.id == envId;
     });
     state.environments.splice(index, 1);
+
+    // schedules
+    state.schedules.forEach((schedule, index) => {
+      if (schedule.environment == envId) {
+        state.schedules.splice(index, 1);
+      }
+    })
   },
 
   [UPDATE_ENVIRONMENT](state, updatedEnv) {
@@ -145,6 +165,15 @@ export default {
 
     // delete results
     state.results = state.results.filter(result => result.test != testId);
+
+    // delete schedule
+    state.schedules.forEach(schedule => {
+      const index = schedule.tests.filter(test => test.id == testId);
+
+      if (index != -1) {
+        schedule.tests.splice(index, 1);
+      }
+    });
 
     // delete runs
     // const runsIdForDelete = [];
@@ -386,5 +415,48 @@ export default {
     state.assertions = state.assertions.concat(assertions);
     state.environments = state.environments.concat(environments);
     state.tests = state.tests.concat(tests);
+  },
+  [RECORD_SCHEDULES](state, schedules) {
+    state.schedules = schedules;
+  },
+  [CREATE_SCHEDULE](state, schedule) {
+    state.schedules.push(schedule);
+  },
+  [DELETE_SCHEDULE](state, scheduleId) {
+    const index = state.schedules.findIndex(element => element.id == scheduleId);
+
+    if (index != -1) {
+      state.schedules.splice(index, 1);
+    }
+  },
+  [UPDATE_SCHEDULE](state, updatedSchedule) {
+    state.schedules.forEach(schedule => {
+      if (schedule.id === updatedSchedule.id) {
+        Object.keys(updatedSchedule).forEach(key => {
+          schedule[key] = updatedSchedule[key];
+        });
+      }
+    });
+  },
+  [ADD_TEST_TO_SCHEDULE](state, {
+    scheduleId,
+    testId
+  }) {
+    const schedule = state.schedules.find(schedule => schedule.id == scheduleId);
+    if (schedule.tests.findIndex(test => test.id == testId) == -1) {
+      const test = state.tests.find(test => test.id == testId);
+      schedule.tests.push(test);
+    }
+  },
+  [DELETE_TEST_FROM_SCHEDULE](state, {
+    scheduleId,
+    testId
+  }) {
+    const schedule = state.schedules.find(schedule => schedule.id == scheduleId);
+    const index = schedule.tests.findIndex(test => test.id == testId);
+
+    if (index != -1) {
+      schedule.tests.splice(index, 1);
+    }
   }
 }

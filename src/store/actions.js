@@ -34,7 +34,13 @@ import {
   runSingleTest,
   runMultipleTests,
   getResults,
-  getRuns
+  getRuns,
+  getSchedules,
+  createSchedule,
+  deleteSchedule,
+  updateSchedule,
+  createAssociationBetweenTestAndSchedule,
+  deleteAssociationBetweenTestAndSchedule
 } from '../service/getData'
 import {
   RECORD_USERINFO,
@@ -69,7 +75,13 @@ import {
   UPDATE_ASSERTION,
   RECORD_ASSERTIONS,
   RECORD_RESULTS,
-  RECORD_SUITES
+  RECORD_SUITES,
+  RECORD_SCHEDULES,
+  CREATE_SCHEDULE,
+  DELETE_SCHEDULE,
+  UPDATE_SCHEDULE,
+  ADD_TEST_TO_SCHEDULE,
+  DELETE_TEST_FROM_SCHEDULE
 } from './mutation-types'
 
 
@@ -560,5 +572,92 @@ export default {
   }) {
     const runs = await getRuns();
     commit(RECORD_SUITES, runs);
+  },
+
+  /**
+   * 获取用户所有的定时任务
+   * 
+   */
+  async getAllSchedules({
+    commit
+  }) {
+    const schedules = await getSchedules();
+    commit(RECORD_SCHEDULES, schedules);
+  },
+
+  /**
+   * 创建一个定时任务
+   * 
+   * @param {object} schedule 
+   */
+  async createOneSchedule({
+    commit
+  }, schedule) {
+    const createdSchedule = await createSchedule(schedule);
+    commit(CREATE_SCHEDULE, createdSchedule);
+    return createdSchedule;
+  },
+
+  /**
+   * 删除一个定时任务
+   * 
+   * @param {Number} scheduleId 
+   */
+  async deleteSchedule({
+    commit
+  }, scheduleId) {
+    await deleteSchedule(scheduleId);
+    commit(DELETE_SCHEDULE, scheduleId);
+  },
+
+  /**
+   * 更新定时任务
+   *
+   * @param {Object} schedule 
+   */
+  async updateThisSchedule({
+    commit
+  }, schedule) {
+    const newSchedule = await updateSchedule(schedule);
+    commit(UPDATE_SCHEDULE, newSchedule);
+  },
+
+  /**
+   * 关联用例和定时任务
+   * 
+   * @param {Number} scheduleId 
+   * @param {Number} testId 
+   */
+  async associateTestAndSchedule({
+    commit
+  }, {
+    scheduleId,
+    testId
+  }) {
+    await createAssociationBetweenTestAndSchedule(scheduleId, testId);
+    commit(ADD_TEST_TO_SCHEDULE, {
+      scheduleId: scheduleId,
+      testId: testId
+    });
+  },
+
+
+  /**
+   * 删除用例和定时任务的关联
+   * 
+   * @param {Number} scheduleId 
+   * @param {Number} testId 
+   */
+  async removeAssociateTestAndSchedule({
+    commit
+  }, {
+    scheduleId,
+    testId
+  }) {
+    await deleteAssociationBetweenTestAndSchedule(scheduleId, testId);
+    commit(DELETE_TEST_FROM_SCHEDULE, {
+      scheduleId: scheduleId,
+      testId: testId
+    })
   }
 }

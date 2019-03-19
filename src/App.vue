@@ -170,4 +170,61 @@ export default {
 .rerun-link:hover {
   color: #333;
 }
+
+/* monitor modal */
+#myMonitorModal___BV_modal_header_ {
+  border-bottom: 0;
+}
+
+/* kendo datetimepick */
+.k-list .k-item,
+.k-list-optionlabel {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.87);
+  padding: 2px 24px;
+  min-height: 2em;
+  line-height: 2em;
+  white-space: normal;
+}
+.k-list {
+  background: white;
+}
+.k-list .k-item:hover.k-state-selected {
+  background-color: #337ab7;
+  border-color: #337ab7;
+  color: #fff;
+}
+.k-list .k-item.k-state-selected {
+  background-color: #337ab7;
+  border-color: #337ab7;
+  color: #fff;
+}
+.k-picker-wrap .k-input {
+  display: block;
+  width: 100%;
+  height: 38px;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  overflow: visible;
+  margin: 0;
+  font-family: inherit;
+  box-sizing: border-box;
+
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+.k-picker-wrap .k-input:focus {
+  border-color: #80bdff;
+  color: #495057;
+  background-color: #fff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  z-index: 3;
+}
 </style>

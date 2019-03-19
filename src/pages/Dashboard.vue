@@ -221,7 +221,8 @@ export default {
     const p6 = store.dispatch("getAllAssertions");
     const p7 = store.dispatch("getAllResults");
     const p8 = store.dispatch("getAllRuns");
-    Promise.all([p1, p2, p3, p4, p5, p6, p7, p8]).then(() => next());
+    const p9 = store.dispatch("getAllSchedules");
+    Promise.all([p1, p2, p3, p4, p5, p6, p7, p8, p9]).then(() => next());
   },
   created() {
     this.initWebSocket();
@@ -237,7 +238,8 @@ export default {
         const p6 = store.dispatch("getAllAssertions");
         const p7 = store.dispatch("getAllResults");
         const p8 = store.dispatch("getAllRuns");
-        Promise.all([p1, p2, p3, p4, p5, p6, p7, p8]);
+        const p9 = store.dispatch("getAllSchedules");
+        Promise.all([p1, p2, p3, p4, p5, p6, p7, p8, p9]);
       }
     }
   },

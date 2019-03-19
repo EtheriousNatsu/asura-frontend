@@ -297,3 +297,48 @@ export const getResults = () => fetch('/results');
  * 获取所有套件
  */
 export const getRuns = () => fetch('testsuites');
+
+/**
+ * 获取所有定时任务
+ */
+export const getSchedules = () => fetch('/schedules');
+
+/**
+ * 创建定时任务
+ * 
+ * @param {Object} schedule 
+ */
+export const createSchedule = (schedule) => fetch('/schedules', schedule, 'post');
+
+/**
+ * 删除定时任务
+ * 
+ * @param {Number} scheduleId 
+ */
+export const deleteSchedule = (scheduleId) => fetch(`/schedules/${scheduleId}`, undefined, 'delete');
+
+
+/**
+ * 创建用例和定时任务的关系
+ * 
+ * @param {Number} scheduleId 
+ * @param {Number} testId 
+ */
+export const createAssociationBetweenTestAndSchedule = (scheduleId, testId) => fetch(`/schedules/${scheduleId}/tests/${testId}`, undefined, 'post');
+
+
+/**
+ * 删除用例和定时任务的关系
+ * 
+ * @param {Number} scheduleId 
+ * @param {Number} testId 
+ */
+export const deleteAssociationBetweenTestAndSchedule = (scheduleId, testId) => fetch(`/schedules/${scheduleId}/tests/${testId}`, undefined, 'delete');
+
+
+/**
+ * 更新定时任务
+ * 
+ * @param {Object} schedule 
+ */
+export const updateSchedule = (schedule) => fetch(`/schedules/${schedule.id}`, schedule, 'put');

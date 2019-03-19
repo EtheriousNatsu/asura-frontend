@@ -22,6 +22,7 @@ export const initialState = () => ({
   env: 'All', //默认执行环境
   results: [], // case result列表
   runs: [], // suite result列表
+  schedules: [], // 定时任务列表
 })
 
 const state = initialState;
