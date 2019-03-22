@@ -432,7 +432,8 @@ export default {
     getLastestFailedRunForXlabel(xLabel) {
       return this.runs.find(run => {
         return (
-          this.convert24hto12h(new Date(run.createdAt).getHours()) === xLabel
+          this.convert24hto12h(new Date(run.createdAt).getHours()) === xLabel &&
+          run.status == "TestRunFailed"
         );
       });
     },
