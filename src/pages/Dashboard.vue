@@ -177,7 +177,11 @@
 import { mapMutations } from "vuex";
 import store from "@/store";
 
-import { CREATE_RESULT, CREATE_SUITE } from "../store/mutation-types";
+import {
+  CREATE_RESULT,
+  CREATE_SUITE,
+  UPDATE_SCHEDULE
+} from "../store/mutation-types";
 
 import DashboardHead from "@/components/dashboard/dashboardHead";
 import DashboardFoot from "@/components/dashboard/DashboardFoot";
@@ -244,7 +248,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations([CREATE_RESULT, CREATE_SUITE]),
+    ...mapMutations([CREATE_RESULT, CREATE_SUITE, UPDATE_SCHEDULE]),
     initWebSocket() {
       const wsUri =
         "ws://10.41.101.117/ws/asura/" + this.$store.state.token + "/";
@@ -269,6 +273,8 @@ export default {
         this.recoreResult(message);
       } else if (data.type === "suite") {
         this.recordSuite(message);
+      } else if (data.type === "schdule") {
+        this.updateSchedule(message);
       }
     },
     webSocketOnClose(e) {
@@ -279,6 +285,9 @@ export default {
     },
     recordSuite(suite) {
       this.CREATE_SUITE(suite);
+    },
+    updateSchedule(schedule) {
+      this.UPDATE_SCHEDULE(schedule);
     },
     getTo(serviceId, envName) {
       const runs = this.$store.getters.getRuns(serviceId, envName);

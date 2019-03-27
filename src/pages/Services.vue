@@ -1,7 +1,7 @@
 <template>
   <main class="container">
     <services-head />
-    <div v-show="showOverview">
+    <div v-if="showOverview">
       <b-row class="pt-4">
         <b-col md="12">
           <b-row>

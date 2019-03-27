@@ -3,8 +3,8 @@
         <strong> {{getSelectedFrequencyText(schedule.frequency)}} </strong>
         <small class="text-muted">
             <strong>Started:</strong>{{schedule.startDate}}
-            <span v-show="schedule.nextRunTime">
-                - <strong>Next: Run:</strong>{{schedule.nextRunTime}}
+            <span v-if="schedule.nextRunTime">
+                - <strong>Next: Run:</strong>{{$moment(schedule.nextRunTime).format("YYYY/MM/DD h:mm A")}}
             </span>
         </small>
         <span class="float-right">
@@ -26,7 +26,7 @@
                 <small>Environment: {{getSelectedEnvName(schedule.environment)}}</small>
                 <br>
                 <small>Enabled tests: {{schedule.tests.length}}</small>
-                <small v-show="schedule.lastRunId">
+                <small v-if="schedule.lastRunId">
                     <br>
                     <b-link :to="{name: 'results', params: {runId: schedule.lastRunId}}">View last result</b-link>
                 </small>

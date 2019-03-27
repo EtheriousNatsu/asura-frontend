@@ -1,6 +1,8 @@
 <template>
     <b-form-group>
-        <b-form-group class="text-left">
+        <b-form-group 
+          v-if="showTimePicker"
+          class="text-left">
             <template slot="label">
                 <label style="padding:0rem .75rem;margin-bottom:0; color:rgb(33, 37, 41);">
                     Start Date
@@ -87,6 +89,10 @@ export default {
   props: {
     schedule: {
       type: Object
+    },
+    showTimePicker: {
+      type: Boolean,
+      default: true
     }
   },
   components: {

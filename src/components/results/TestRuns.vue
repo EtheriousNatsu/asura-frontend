@@ -47,6 +47,7 @@
     </b-list-group>
     <br>
     <b-pagination 
+      size="sm"
       v-if="isPagination"
       :total-rows="runs.length" 
       v-model="currentPage" 

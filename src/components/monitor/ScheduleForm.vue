@@ -21,6 +21,7 @@
         <small class="text-muted">Edit this schedule's settings</small>
       </p>
       <schedule-setting 
+        :showTimePicker="false"
         v-on:hide-scheduleForm="hideScheduleForm"
         :schedule="schedule"/>
     </b-col>
