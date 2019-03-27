@@ -273,7 +273,7 @@ export default {
         this.recoreResult(message);
       } else if (data.type === "suite") {
         this.recordSuite(message);
-      } else if (data.type === "schdule") {
+      } else if (data.type === "schedule") {
         this.updateSchedule(message);
       }
     },
