@@ -107,10 +107,12 @@ export default {
   },
   mounted() {
     // 设置datetimepick不可编辑
-    document
-      .getElementsByClassName("k-input")
-      .item(0)
-      .setAttribute("readonly", true);
+    if (document.getElementsByClassName("k-input").item(0)) {
+      document
+        .getElementsByClassName("k-input")
+        .item(0)
+        .setAttribute("readonly", true);
+    }
   },
   data() {
     return {
