@@ -4,7 +4,7 @@
         <small class="text-muted">
             <strong>Started:</strong>{{schedule.startDate}}
             <span v-if="schedule.nextRunTime">
-                - <strong>Next: Run:</strong>{{$moment(schedule.nextRunTime).format("YYYY/MM/DD h:mm A")}}
+                - <strong>Next Run:</strong>{{$moment(schedule.nextRunTime).format("YYYY/MM/DD h:mm A")}}
             </span>
         </small>
         <span class="float-right">
