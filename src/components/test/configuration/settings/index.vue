@@ -12,16 +12,18 @@
 <script>
 import TestManage from "./TestManage";
 import TestTrigger from "./TestTrigger";
+import TestSchedule from "./TestSchedule";
 
 export default {
   name: "Settings",
   components: {
     TestManage,
-    TestTrigger
+    TestTrigger,
+    TestSchedule
   },
   data() {
     return {
-      components: ["TestTrigger", "TestManage"]
+      components: ["TestSchedule", "TestTrigger", "TestManage"]
     };
   }
 };
