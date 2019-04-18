@@ -22,7 +22,11 @@
                         </h5>
                     </span>
                 </div>
-
+                <b-alert
+                  :show="showCreateHookErr"
+                  variant="danger">
+                  {{createHookErrorMsg}}
+                </b-alert>
                 <b-row>
                     <b-col md="12">
                       <email-hook-settings 
@@ -71,7 +75,9 @@ export default {
       showFirstModal: true,
       showSecondModal: false,
       createdEmailHook: null,
-      clickedDoBtn: false
+      clickedDoBtn: false,
+      createHookErrorMsg: null,
+      showCreateHookErr: false
     };
   },
   mounted() {
@@ -104,11 +110,18 @@ export default {
       this.destroyModal();
     },
     createEmailHook(emailHookParams) {
-      this.createNewHook(emailHookParams).then(createdHook => {
-        this.createdEmailHook = createdHook;
-        this.showFirstModal = false;
-        this.showSecondModal = true;
-      });
+      this.createNewHook(emailHookParams)
+        .then(createdHook => {
+          this.createdEmailHook = createdHook;
+          this.showFirstModal = false;
+          this.showSecondModal = true;
+          this.createHookErrorMsg = null;
+          this.showCreateHookErr = false;
+        })
+        .catch(errMsg => {
+          this.createHookErrorMsg = errMsg;
+          this.showCreateHookErr = true;
+        });
     },
     destroyModal() {
       this.$emit("destroy-modal");

@@ -89,6 +89,7 @@
 <script>
 import { mapActions } from "vuex";
 import { sendEmailOpts, viasOpts } from "@/constant/hooks";
+import toast from "@/toast/toast";
 
 export default {
   name: "EmailHookSettings",
@@ -155,7 +156,16 @@ export default {
         type: "EmailHook",
         vias: this.selected
       };
-      this.updateThisHook(hook).then(() => this.cancelUpdateEmailHook());
+      this.$validator.validateAll().then(result => {
+        if (result) {
+          this.updateThisHook(hook)
+            .then(() => this.cancelUpdateEmailHook())
+            .catch(errMsg => {
+              toast.error(errMsg);
+              this.cancelUpdateEmailHook();
+            });
+        }
+      });
     },
     cancelUpdateEmailHook() {
       this.$emit("hide-hookForm");

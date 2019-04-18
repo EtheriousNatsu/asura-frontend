@@ -7,7 +7,7 @@ export default (error) => {
   if (is4XX(errorStatus)) {
     // 客户端错误处理
     const errorMsg = errorData.msg;
-    throw Error(errorMsg);
+    throw errorMsg;
   } else if (is5XX(errorStatus)) {
     // 服务端错误处理
     toast.error(response.statusText);
