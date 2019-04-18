@@ -1,6 +1,8 @@
 <template>
   <div>
-    <dashboard-head/>
+    <keep-alive>
+      <dashboard-head/>
+    </keep-alive>
     <b-container 
       v-if="showServices && services.length">
       <b-row>
@@ -167,7 +169,9 @@
     </b-container>
     <service-new v-if="showServices && services.length === 0"/>
     <router-view/>
-    <dashboard-foot/>
+    <keep-alive>
+      <dashboard-foot/>
+    </keep-alive>
   </div>
 </template>
 
@@ -226,12 +230,14 @@ export default {
     const p7 = store.dispatch("getAllResults");
     const p8 = store.dispatch("getAllRuns");
     const p9 = store.dispatch("getAllSchedules");
-    Promise.all([p1, p2, p3, p4, p5, p6, p7, p8, p9]).then(() => next());
+    const p10 = store.dispatch("getAllHooks");
+    Promise.all([p1, p2, p3, p4, p5, p6, p7, p8, p9, p10]).then(() => next());
   },
   created() {
     this.initWebSocket();
   },
   watch: {
+    // 临时处理
     $route: function(newRoute, oldRoute) {
       if (newRoute.name === "dashboard") {
         const p1 = store.dispatch("getAllServices");
@@ -243,7 +249,8 @@ export default {
         const p7 = store.dispatch("getAllResults");
         const p8 = store.dispatch("getAllRuns");
         const p9 = store.dispatch("getAllSchedules");
-        Promise.all([p1, p2, p3, p4, p5, p6, p7, p8, p9]);
+        const p10 = store.dispatch("getAllHooks");
+        Promise.all([p1, p2, p3, p4, p5, p6, p7, p8, p9, p10]);
       }
     }
   },

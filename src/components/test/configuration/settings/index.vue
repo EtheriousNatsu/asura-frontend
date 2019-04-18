@@ -13,17 +13,19 @@
 import TestManage from "./TestManage";
 import TestTrigger from "./TestTrigger";
 import TestSchedule from "./TestSchedule";
+import EmailHooks from "./EmailHooks";
 
 export default {
   name: "Settings",
   components: {
     TestManage,
     TestTrigger,
-    TestSchedule
+    TestSchedule,
+    EmailHooks
   },
   data() {
     return {
-      components: ["TestSchedule", "TestTrigger", "TestManage"]
+      components: ["EmailHooks", "TestSchedule", "TestTrigger", "TestManage"]
     };
   }
 };

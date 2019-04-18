@@ -342,3 +342,50 @@ export const deleteAssociationBetweenTestAndSchedule = (scheduleId, testId) => f
  * @param {Object} schedule 
  */
 export const updateSchedule = (schedule) => fetch(`/schedules/${schedule.id}`, schedule, 'put');
+
+
+/**
+ * 获取所有hook
+ */
+export const getHooks = () => fetch('/hooks');
+
+/**
+ * 创建一个hook
+ * 
+ * @param {Object} hook 
+ */
+export const createHook = (hook) => fetch('/hooks', hook, 'post');
+
+
+/**
+ * 删除hook
+ * 
+ * @param {Number} hookId 
+ */
+export const deleteHook = (hookId) => fetch(`/hooks/${hookId}`, undefined, 'delete');
+
+
+/**
+ * 更新hook
+ * 
+ * @param {Object} hook 
+ */
+export const updateHook = (hook) => fetch(`/hooks/${hook.id}`, hook, 'put');
+
+
+/**
+ * 创建用例和hook的关系
+ * 
+ * @param {Number} hookId 
+ * @param {Number} testId 
+ */
+export const createAssociationBetweenTestAndHook = (hookId, testId) => fetch(`/hooks/${hookId}/tests/${testId}`, undefined, 'post');
+
+
+/**
+ * 删除用例和hook关系
+ * 
+ * @param {Number} hookId 
+ * @param {Number} testId 
+ */
+export const deleteAssociationBetweenTestAndHook = (hookId, testId) => fetch(`/hooks/${hookId}/tests/${testId}`, undefined, 'delete');

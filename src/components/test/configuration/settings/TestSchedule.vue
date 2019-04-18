@@ -21,7 +21,7 @@
                 class="text-muted">
                 <strong>Started:</strong>
                 {{schedule.startDate}}
-                <span>
+                <span v-if="schedule.nextRunTime">
                   - 
                   <strong>Next Run:</strong>
                   {{$moment(schedule.nextRunTime).format("YYYY/MM/DD h:mm A")}}
@@ -51,7 +51,7 @@
 
 <script>
 import { mapActions } from "vuex";
-
+import { clone } from "@/config/utils";
 import { frequencyOpts } from "@/constant/schedules";
 
 export default {
@@ -63,11 +63,13 @@ export default {
   },
   computed: {
     schedules() {
-      const serviceSchedules = this.$store.state.schedules.filter(
-        schedule => schedule.service == this.$route.params.serviceId
+      const serviceSchedules = clone(
+        this.$store.state.schedules.filter(
+          schedule => schedule.service == this.$route.params.serviceId
+        )
       );
 
-      serviceSchedules.map(schedule => {
+      return serviceSchedules.map(schedule => {
         if (schedule.tests.find(test => test.id == this.$route.params.testId)) {
           // 该用例被定时任务选中
           schedule.isChecked = true;
@@ -75,9 +77,8 @@ export default {
           // 该用例没被定时任务选中
           schedule.isChecked = false;
         }
+        return schedule;
       });
-
-      return serviceSchedules;
     },
     linkTo() {
       return {

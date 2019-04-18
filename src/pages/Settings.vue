@@ -10,8 +10,7 @@
                               v-for="(item, index) in settingsOptions"
                               :key="index"
                               :to="item.to"
-                              :exact="item.exact"
-                              @click="selectSettings(item)">
+                              :exact="item.isExact">
                                 {{ item.text }}
                             </b-list-group-item>
                         </b-list-group>
@@ -38,7 +37,9 @@
                     </div> -->
                 </b-col>
                 <b-col md="9">
-                    <component :is="selected"/>
+                  <service-settings 
+                    v-if="$route.name == 'settings'"/>
+                  <router-view v-else/>
                 </b-col>
             </b-row>
         </b-col>
@@ -49,16 +50,12 @@
 
 
 <script>
-import Manage from "@/components/Settings/manage";
 import ServiceSettings from "@/components/Settings/ServiceSettings";
-import TriggerUrl from "@/components/Settings/TriggerUrl";
 
 export default {
   name: "Settings",
   components: {
-    Manage,
-    ServiceSettings,
-    TriggerUrl
+    ServiceSettings
   },
   data() {
     return {
@@ -66,34 +63,25 @@ export default {
         {
           text: "Service settings",
           to: { name: "settings" },
-          component: "ServiceSettings",
-          exact: true
+          isExact: true
+        },
+        {
+          text: "Hooks & Alerts",
+          to: { name: "alerts" },
+          isExact: false
         },
         {
           text: "Trigger URL",
-          to: { name: "settings", params: { tab: "trigger" } },
-          component: "TriggerUrl",
-          exact: false
+          to: { name: "trigger" },
+          isExact: false
         },
         {
           text: "Manage",
-          to: { name: "settings", params: { tab: "manage" } },
-          component: "Manage",
-          exact: false
+          to: { name: "manage" },
+          isExact: false
         }
-      ],
-      selected: "ServiceSettings"
+      ]
     };
-  },
-  computed: {
-    service() {
-      return this.$store.getters.getService(this.$route.params.serviceId);
-    }
-  },
-  methods: {
-    selectSettings(item) {
-      this.selected = item.component;
-    }
   }
 };
 </script>

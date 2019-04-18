@@ -23,6 +23,7 @@ export const initialState = () => ({
   results: [], // case result列表
   runs: [], // suite result列表
   schedules: [], // 定时任务列表
+  hooks: [] // hook列表
 })
 
 const state = initialState;

@@ -40,7 +40,13 @@ import {
   deleteSchedule,
   updateSchedule,
   createAssociationBetweenTestAndSchedule,
-  deleteAssociationBetweenTestAndSchedule
+  deleteAssociationBetweenTestAndSchedule,
+  getHooks,
+  createHook,
+  deleteHook,
+  updateHook,
+  createAssociationBetweenTestAndHook,
+  deleteAssociationBetweenTestAndHook
 } from '../service/getData'
 import {
   RECORD_USERINFO,
@@ -81,7 +87,13 @@ import {
   DELETE_SCHEDULE,
   UPDATE_SCHEDULE,
   ADD_TEST_TO_SCHEDULE,
-  DELETE_TEST_FROM_SCHEDULE
+  DELETE_TEST_FROM_SCHEDULE,
+  RECORD_HOOKS,
+  CREATE_HOOK,
+  DELETE_HOOK,
+  UPDATE_HOOK,
+  ADD_TEST_TO_HOOK,
+  DELETE_TEST_FROM_HOOK
 } from './mutation-types'
 
 
@@ -512,7 +524,7 @@ export default {
   },
 
   /**
-   * 获取所有断言
+   * 获取所有断言, 并同步更新vuex
    * 
    */
   async getAllAssertions({
@@ -575,7 +587,7 @@ export default {
   },
 
   /**
-   * 获取用户所有的定时任务
+   * 获取用户所有的定时任务, 并同步更新vuex
    * 
    */
   async getAllSchedules({
@@ -586,7 +598,7 @@ export default {
   },
 
   /**
-   * 创建一个定时任务
+   * 创建一个定时任务, 并同步更新vuex
    * 
    * @param {object} schedule 
    */
@@ -599,7 +611,7 @@ export default {
   },
 
   /**
-   * 删除一个定时任务
+   * 删除一个定时任务, 并同步更新vuex
    * 
    * @param {Number} scheduleId 
    */
@@ -611,7 +623,7 @@ export default {
   },
 
   /**
-   * 更新定时任务
+   * 更新定时任务, 并同步更新vuex
    *
    * @param {Object} schedule 
    */
@@ -623,7 +635,7 @@ export default {
   },
 
   /**
-   * 关联用例和定时任务
+   * 关联用例和定时任务, 并同步更新vuex
    * 
    * @param {Number} scheduleId 
    * @param {Number} testId 
@@ -643,7 +655,7 @@ export default {
 
 
   /**
-   * 删除用例和定时任务的关联
+   * 删除用例和定时任务的关联, 并同步更新vuex
    * 
    * @param {Number} scheduleId 
    * @param {Number} testId 
@@ -659,5 +671,91 @@ export default {
       scheduleId: scheduleId,
       testId: testId
     })
+  },
+
+  /**
+   * 获取所有hooks，并记录到vuex
+   * 
+   */
+  async getAllHooks({
+    commit
+  }) {
+    const hooks = await getHooks();
+    commit(RECORD_HOOKS, hooks);
+  },
+
+  /**
+   * 创建一个hook，并记录到vuex
+   * 
+   * @param {Object} hook 
+   */
+  async createNewHook({
+    commit
+  }, hook) {
+    const createdHook = await createHook(hook);
+    commit(CREATE_HOOK, createdHook);
+    return createdHook;
+  },
+
+  /**
+   * 删除hook, 并同步更新vuex
+   *  
+   * @param {Number} hookId 
+   */
+  async deleteTheHook({
+    commit
+  }, hookId) {
+    await deleteHook(hookId);
+    commit(DELETE_HOOK, hookId);
+  },
+
+  /**
+   * 创建用例和hook的关联关系, 并同步更新vuex
+   * 
+   * @param {Number} hookId
+   * @param {Number} testId 
+   */
+  async associateTestAndHook({
+    commit
+  }, {
+    hookId,
+    testId
+  }) {
+    await createAssociationBetweenTestAndHook(hookId, testId);
+    commit(ADD_TEST_TO_HOOK, {
+      hookId: hookId,
+      testId: testId
+    });
+  },
+
+  /**
+   * 删除用例和hook的关联关系, 并同步更新vuex
+   * 
+   * @param {Number} hookId
+   * @param {Number} testId 
+   */
+  async removeAssociateTestAndHook({
+    commit
+  }, {
+    hookId,
+    testId
+  }) {
+    await deleteAssociationBetweenTestAndHook(hookId, testId);
+    commit(DELETE_TEST_FROM_HOOK, {
+      hookId: hookId,
+      testId: testId
+    })
+  },
+
+  /**
+   * 更新hook,并同步更新vuex
+   * 
+   * @param {Object} hook 
+   */
+  async updateThisHook({
+    commit
+  }, hook) {
+    const newHook = await updateHook(hook);
+    commit(UPDATE_HOOK, newHook);
   }
 }

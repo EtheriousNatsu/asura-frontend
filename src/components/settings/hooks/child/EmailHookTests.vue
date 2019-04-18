@@ -33,7 +33,7 @@
             </b-link>
           </span>
           <b-form-checkbox
-            @change="createOrDeleteAssociationBetweenTestAndSchedule(test.id)"
+            @change="createOrDeleteAssociationBetweenTestAndHook(test.id)"
             v-model="selectedTests"
             :value="test.id">
             {{test.name}}
@@ -51,7 +51,7 @@
             v-if="showBtn"
             style="padding-top: 10px;">
             <b-button
-              @click="cancelCreateSchedule"
+              @click="cancelCreateHook"
               class="float-left"
               variant="outline-primary">
               Cancel
@@ -72,11 +72,10 @@
 import { mapActions } from "vuex";
 
 export default {
-  name: "ScheduleTests",
+  name: "EmailHookTests",
   props: {
-    schedule: {
-      type: Object,
-      required: true
+    emailHook: {
+      type: Object
     },
     showBtn: {
       type: Boolean,
@@ -84,8 +83,8 @@ export default {
     }
   },
   mounted() {
-    if (this.schedule) {
-      this.selectedTests = this.schedule.tests.map(test => test.id);
+    if (this.emailHook) {
+      this.selectedTests = this.emailHook.tests.map(test => test.id);
     }
   },
   data() {
@@ -131,10 +130,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      "removeAssociateTestAndSchedule",
-      "associateTestAndSchedule"
-    ]),
+    ...mapActions(["associateTestAndHook", "removeAssociateTestAndHook"]),
     toggleAll(checked) {
       this.selectedTests = checked ? this.tests.map(test => test.id) : [];
 
@@ -142,10 +138,10 @@ export default {
         if (this.selectedTests.length) {
           this.selectedTests.forEach(testId => {
             if (
-              this.schedule.tests.findIndex(test => test.id == testId) == -1
+              this.emailHook.tests.findIndex(test => test.id == testId) == -1
             ) {
-              this.associateTestAndSchedule({
-                scheduleId: this.schedule.id,
+              this.associateTestAndHook({
+                hookId: this.emailHook.id,
                 testId: testId
               });
             }
@@ -154,31 +150,31 @@ export default {
           this.tests
             .map(test => test.id)
             .forEach(testId => {
-              this.removeAssociateTestAndSchedule({
-                scheduleId: this.schedule.id,
+              this.removeAssociateTestAndHook({
+                hookId: this.emailHook.id,
                 testId: testId
               });
             });
         }
       }
     },
-    createOrDeleteAssociationBetweenTestAndSchedule(testId) {
+    createOrDeleteAssociationBetweenTestAndHook(testId) {
       // 只有在编辑定时任务时，才触发
       if (!this.showBtn) {
         if (this.selectedTests.includes(testId)) {
-          this.removeAssociateTestAndSchedule({
-            scheduleId: this.schedule.id,
+          this.removeAssociateTestAndHook({
+            hookId: this.emailHook.id,
             testId: testId
           });
         } else {
-          this.associateTestAndSchedule({
-            scheduleId: this.schedule.id,
+          this.associateTestAndHook({
+            hookId: this.emailHook.id,
             testId: testId
           });
         }
       }
     },
-    cancelCreateSchedule() {
+    cancelCreateHook() {
       this.$emit("destroy-modal");
     },
     createAssociation() {

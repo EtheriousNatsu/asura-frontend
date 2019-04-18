@@ -42,7 +42,13 @@ import {
   DELETE_SCHEDULE,
   UPDATE_SCHEDULE,
   ADD_TEST_TO_SCHEDULE,
-  DELETE_TEST_FROM_SCHEDULE
+  DELETE_TEST_FROM_SCHEDULE,
+  RECORD_HOOKS,
+  CREATE_HOOK,
+  DELETE_HOOK,
+  UPDATE_HOOK,
+  ADD_TEST_TO_HOOK,
+  DELETE_TEST_FROM_HOOK,
 } from './mutation-types'
 
 import {
@@ -175,6 +181,14 @@ export default {
       }
     });
 
+    // delete hook
+    state.hooks.forEach(hook => {
+      const index = hook.tests.filter(test => test.id == testId);
+      if (index != -1) {
+        hook.tests.splice(index, 1);
+      }
+    });
+
     // delete runs
     // const runsIdForDelete = [];
 
@@ -202,19 +216,44 @@ export default {
     // update setups
     state.setups.forEach(setup => {
       setup.tests.forEach(test => {
-        Object.keys(updatedTest).forEach(key => {
-          test[key] = updatedTest[key];
-        });
+        if (test.id == updatedTest.id) {
+          Object.keys(updatedTest).forEach(key => {
+            test[key] = updatedTest[key];
+          });
+        }
       });
     });
     // update teardowns
     state.teardowns.forEach(teardown => {
       teardown.tests.forEach(test => {
-        Object.keys(updatedTest).forEach(key => {
-          test[key] = updatedTest[key];
-        });
+        if (test.id == updatedTest.id) {
+          Object.keys(updatedTest).forEach(key => {
+            test[key] = updatedTest[key];
+          });
+        }
       });
     });
+    // update schedules
+    state.schedules.forEach(schedule => {
+      schedule.tests.forEach(test => {
+        if (test.id == updatedTest.id) {
+          Object.keys(updatedTest).forEach(key => {
+            test[key] = updatedTest[key];
+          });
+        }
+      })
+    })
+    // update hooks
+    state.hooks.forEach(hook => {
+      hook.tests.forEach(test => {
+        if (test.id == updatedTest.id) {
+          Object.keys(updatedTest).forEach(key => {
+            test[key] = updatedTest[key];
+          });
+        }
+      })
+    })
+
   },
 
   [RECORD_STEPS](state, steps) {
@@ -458,5 +497,50 @@ export default {
     if (index != -1) {
       schedule.tests.splice(index, 1);
     }
+  },
+
+  [RECORD_HOOKS](state, hooks) {
+    state.hooks = hooks;
+  },
+  [CREATE_HOOK](state, hook) {
+    state.hooks.push(hook);
+  },
+  [DELETE_HOOK](state, hookId) {
+    const index = state.hooks.findIndex(hook => hook.id == hookId);
+    if (index != -1) {
+      state.hooks.splice(index, 1);
+    }
+  },
+  [ADD_TEST_TO_HOOK](state, {
+    hookId,
+    testId
+  }) {
+    const hook = state.hooks.find(hook => hook.id == hookId);
+    if (hook.tests.findIndex(test => test.id == testId) == -1) {
+      const test = state.tests.find(test => test.id == testId);
+      hook.tests.push(test);
+    }
+  },
+
+  [DELETE_TEST_FROM_HOOK](state, {
+    hookId,
+    testId
+  }) {
+    const hook = state.hooks.find(hook => hook.id == hookId);
+    const index = hook.tests.findIndex(test => test.id == testId);
+
+    if (index != -1) {
+      hook.tests.splice(index, 1);
+    }
+  },
+
+  [UPDATE_HOOK](state, updatedHook) {
+    state.hooks.forEach(hook => {
+      if (hook.id === updatedHook.id) {
+        Object.keys(updatedHook).forEach(key => {
+          hook[key] = updatedHook[key];
+        });
+      }
+    });
   }
 }

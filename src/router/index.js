@@ -15,8 +15,10 @@ import Test from '@/pages/Test'
 import Results from '@/pages/Results'
 import Settings from '@/pages/Settings'
 import Monitoring from '@/pages/Monitoring'
-
-
+import TriggerUrl from "@/components/Settings/TriggerUrl";
+import Manage from "@/components/Settings/manage";
+import Hooks from "@/components/Settings/hooks/Hooks";
+import EmailHook from "@/components/Settings/hooks/child/EmailHook";
 
 import store from '../store'
 
@@ -126,12 +128,33 @@ const router = new Router({
                 }
               },
               {
-                path: 'settings/:tab?',
+                path: 'settings',
                 name: 'settings',
                 component: Settings,
                 meta: {
                   title: 'Settings'
-                }
+                },
+                children: [{
+                    path: 'trigger',
+                    name: 'trigger',
+                    component: TriggerUrl,
+                  },
+                  {
+                    path: 'manage',
+                    name: 'manage',
+                    component: Manage
+                  },
+                  {
+                    path: 'alerts',
+                    name: 'alerts',
+                    component: Hooks,
+                  },
+                  {
+                    path: 'alerts/email',
+                    name: 'emailHook',
+                    component: EmailHook
+                  }
+                ]
               },
               {
                 path: 'tests/:testId(\\d+)',
