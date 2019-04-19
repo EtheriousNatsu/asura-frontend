@@ -51,8 +51,8 @@ export default {
         .then(() => {
           this.$router.push("/login");
         })
-        .catch(error => {
-          this.errorMsgFromBackend = error.message;
+        .catch(errMsg => {
+          this.errorMsgFromBackend = errMsg;
         });
     }
   }
