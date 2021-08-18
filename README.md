@@ -1,6 +1,6 @@
 # asura-frontend
 
-> asura接口测试平台前端代码
+> asura-frontend
 
 ## Build Setup
 
