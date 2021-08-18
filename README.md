@@ -57,7 +57,7 @@ docker-compose -f local.yml up
 ```
 
 # 生产部署
-1.首先需要
-```
-docker-compose -f production.yml up
-```
+正常情况，直接使用一条命令部署:`docker-compose -f production.yml up`,如果服务器内存太小，在上一条命令构建时报`prod_pack | npm ERR! errno 137`，则:
+1.在本地使用命令`docker-compose -f local.yml up`下载依赖库
+2.在本地使用命令`npm run build`进行构建
+3.在服务器上使用命令`docker-compose -f production.yml up -d nginx`启动服务
