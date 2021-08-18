@@ -14,7 +14,7 @@
     "@progress/kendo-theme-default": "^3.4.0",
     "@progress/kendo-ui": "^2019.1.313",
     "axios": "^0.18.0",
-    "bootstrap-vue": "^2.0.0-rc.11",
+    "bootstrap-vue": "^2.0.0-rc.12",
     "chart.js": "^2.7.3",
     "file": "^0.2.2",
     "htmlhint": "^0.10.1",
