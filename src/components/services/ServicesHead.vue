@@ -104,7 +104,7 @@
             <br>
             <b-nav tabs>
                 <b-nav-item
-                    :exact="item.exact"
+                    :active="item.name === $route.name"
                     v-for="(item, index) in navTabs" 
                     :key="index"  
                     :to="item.to">
@@ -132,7 +132,8 @@ export default {
     return {
       importUrl: "/dashboard/services/import",
       defaultEnv: "All",
-      selectedEnv: ""
+      selectedEnv: "",
+      active: false
     };
   },
   created() {
@@ -171,23 +172,25 @@ export default {
           to: { name: "services", params: params },
           text: "Overview",
           class: "oi-project",
-          exact: true
+          name: "services",
         },
         {
           to: { name: "tests", params: params },
           text: "Tests",
           class: "oi-list-rich",
-          exact: false
+          name: "tests"
         },
         {
           to: { name: "results", params: params },
           text: "Results",
-          class: "oi oi-task"
+          class: "oi oi-task",
+          name: "results"
         },
         {
           to: { name: "monitoring", params: params },
           text: "Monitoring",
-          class: "oi-pulse"
+          class: "oi-pulse",
+          name: "monitoring"
         },
         // {
         //   to: "#",
@@ -197,7 +200,8 @@ export default {
         {
           to: { name: "settings", params: params },
           text: "Settings",
-          class: "oi-cog"
+          class: "oi-cog",
+          name: "settings"
         }
       ];
     },

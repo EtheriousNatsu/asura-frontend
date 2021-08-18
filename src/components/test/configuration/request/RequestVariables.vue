@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-card-header style="margin-bottom: -5px;">
+        <b-card-header style="margin-bottom: -5px;margin-top: 5px">
             Variables
         </b-card-header>
         <div>

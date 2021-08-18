@@ -50,31 +50,30 @@
                                 :indeterminate="indeterminate"
                                 @change="toggleAll">
                                 &nbsp;
+                              <span v-if="indeterminate || allSelected">
+                                  {{ selected.length }} selected
+                              </span> 
+                              <span v-else>
+                                  <b-link 
+                                      @click="filterTestsByfail = false"
+                                      class="mr-2 text-dark"
+                                      style="font-weight:700">
+                                      <i 
+                                          class="oi oi-list-rich" 
+                                          style="font-size: 12px;"/>
+                                      All tests
+                                  </b-link>
+                                  <b-link 
+                                      @click="filterTestsByfail = true"
+                                      class="text-muted"
+                                      style="font-weight:700">
+                                      <i 
+                                          class="oi oi-circle-x" 
+                                          style="font-size: 12px;"></i>
+                                      Failing tests
+                                  </b-link>
+                              </span>
                             </b-form-checkbox>
-                            <span v-if="indeterminate || allSelected">
-                                {{ selected.length }} selected
-                            </span> 
-                            <span v-else>
-                                <b-link 
-                                    @click="filterTestsByfail = false"
-                                    class="mr-2 text-dark"
-                                    style="font-weight:700">
-                                    <i 
-                                        class="oi oi-list-rich" 
-                                        style="font-size: 12px;"/>
-                                    All tests
-                                </b-link>
-                                <b-link 
-                                    @click="filterTestsByfail = true"
-                                    class="text-muted"
-                                    style="font-weight:700">
-                                    <i 
-                                        class="oi oi-circle-x" 
-                                        style="font-size: 12px;"></i>
-                                    Failing tests
-                                </b-link>
-                            </span>
-   
                         </b-col>
                         <b-col 
                             md="6"

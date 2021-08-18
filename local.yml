@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  web:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./compose/local/Dockerfile
+    image: test_asura_frontend
+    container_name: test_asura_frontend
+    volumes:
+        - ./src:/app/src
+        - ./config:/app/config
+    ports:
+      - "9999:9999"
+    networks:
+      asura-web_service:
+        aliases: 
+          - asura-front
+
+networks:
+  asura-web_service:
+    external: true

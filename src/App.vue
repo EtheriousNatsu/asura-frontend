@@ -100,9 +100,15 @@ export default {
 .my-auto-suggest-container {
   flex: 1 1 auto;
 }
+#autosuggest {
+  height: 100%;
+}
 #autosuggest__input {
   border-radius: 0;
   margin-left: -1px;
+  width: 100%;
+  height: 100%;
+  border-color: #6c757d;
 }
 
 .autosuggest__results-container {

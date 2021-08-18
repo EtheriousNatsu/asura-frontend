@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-card-header style="margin-bottom: -5px;">Email hooks</b-card-header>
+        <b-card-header style="margin-bottom: -5px; margin-top:5px">Email hooks</b-card-header>
         <div class="card-body">
           <div v-if="hooks.length == 0">
             <small>

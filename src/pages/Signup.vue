@@ -53,8 +53,8 @@ export default {
         .then(() => {
           this.$router.push("/dashboard");
         })
-        .catch(error => {
-          this.errorMsgFromBackend = error.message;
+        .catch(errMsg => {
+          this.errorMsgFromBackend = errMsg;
         });
     }
   }
