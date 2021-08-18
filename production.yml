@@ -30,6 +30,9 @@ services:
       - asura-web_service
     command: [nginx, '-g', 'daemon off;']
 
+volumes:
+    data-volume:
+
 networks:
   asura-web_service:
     external: true
