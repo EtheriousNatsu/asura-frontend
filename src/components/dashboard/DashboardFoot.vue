@@ -9,7 +9,7 @@
             <b-col md="5">
               <b-nav>
                 <b-nav-text>
-                  © 2018 - 2019 华海乐盈
+                  <!-- © 2018 - 2019 华海乐盈 -->
                 </b-nav-text>
               </b-nav>
             </b-col>
@@ -25,7 +25,7 @@
                 class="">
               <b-nav class="justify-content-end" >
                 <b-nav-text class="text-right">
-                  developer: 周强
+                  <!-- developer: 周强 -->
                 </b-nav-text>
                 <!-- <b-nav-item to="/login">Contact</b-nav-item>
                 <b-nav-item 

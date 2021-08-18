@@ -2,8 +2,6 @@ version: '3'
 
 services:
   nginx:
-    depends_on:
-      - pack
     build:
       context: .
       dockerfile: ./compose/production/nginx/Dockerfile
