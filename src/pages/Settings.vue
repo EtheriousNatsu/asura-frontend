@@ -10,7 +10,7 @@
                               v-for="(item, index) in settingsOptions"
                               :key="index"
                               :to="item.to"
-                              :exact="item.isExact">
+                              :active="$route.name.indexOf(item.to.name) !== -1">
                                 {{ item.text }}
                             </b-list-group-item>
                         </b-list-group>
@@ -63,22 +63,18 @@ export default {
         {
           text: "Service settings",
           to: { name: "settings" },
-          isExact: true
         },
         {
           text: "Hooks & Alerts",
           to: { name: "alerts" },
-          isExact: false
         },
         {
           text: "Trigger URL",
           to: { name: "trigger" },
-          isExact: false
         },
         {
           text: "Manage",
           to: { name: "manage" },
-          isExact: false
         }
       ]
     };

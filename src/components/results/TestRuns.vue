@@ -5,7 +5,8 @@
             :class="{active: $route.name === 'results' && index === 0 && !$route.params.runId}"
             :to="{name: 'results', params: {runId: run.name}}"
             v-for="(run, index) in showedRuns"
-            :key="run.id">
+            :key="run.id"
+            :active="$route.path.search(run.name) !== -1">
             <b-row>
                 <b-col md="10">
                     <h6 class="text-truncate">
