@@ -257,7 +257,7 @@ export default {
   methods: {
     ...mapMutations([CREATE_RESULT, CREATE_SUITE, UPDATE_SCHEDULE]),
     initWebSocket() {
-      const wsUri = "ws://0.0.0.0:8000/ws/asura/" + this.$store.state.token + "/";
+      const wsUri = `ws://${process.env.VUE_APP_SERVER_URL}/ws/asura/` + this.$store.state.token + "/";
       this.webSocket = new WebSocket(wsUri);
 
       this.webSocket.onopen = this.webSocketOnOpen;

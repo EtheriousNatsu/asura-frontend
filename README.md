@@ -57,8 +57,10 @@ docker-compose -f local.yml up
 ```
 
 # 生产部署
+0. 在本地修改当前目录下的`conifg/prod.env.js.VUE_APP_SERVER_URL`,指向你的部署服务器地址
 1. 在本地使用命令`docker-compose -f local.yml up`下载依赖库
 2. 在本地使用命令`npm run build`进行构建
-3. 在服务器上使用命令`docker-compose -f production.yml up -d`启动服务
+3. 把整个项目上传到服务器上
+4. 在服务器上使用命令`docker-compose -f production.yml up -d`启动服务
 
-PS:使用本地构建的原因是，build的时候所需内存很大，极大可能构建失败
+PS:使用本地构建的原因是，如果服务器内存小的话，在服务器上可能构建失败
